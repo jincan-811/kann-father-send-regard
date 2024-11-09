@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>日本时间问候</title>
+    <style>
+        /* 页面基本样式 */
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e0f7fa, #80deea);
+            color: #333;
+        }
+        
+        /* 时间显示样式 */
+        #timeDisplay {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #007bb5;
+            margin: 0.5em 0;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        /* 问候语样式 */
+        #messageDisplay {
+            font-size: 1.8em;
+            color: #8e24aa;
+            margin-top: 0.3em;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        /* 外框样式 */
+        .container {
+            text-align: center;
+            padding: 2em;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+            background: rgba(255, 255, 255, 0.9);
+            width: 80%;
+            max-width: 450px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        /* 渐入效果 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+    <script>
+        function updateTime() {
+            const date = new Date();
+            // 将时间转换为日本时间 (UTC+9)
+            const japanTime = new Date(date.toLocaleString("en-US", { timeZone: "Asia/Tokyo" }));
+            const hours = japanTime.getHours();
+            
+            // 格式化时间显示
+            const timeStr = japanTime.toLocaleTimeString("ja-JP", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+            document.getElementById("timeDisplay").textContent = `日本时间: ${timeStr}`;
+            
+            // 根据小时显示不同的问候语
+            let greeting;
+            if (hours >= 6 && hours < 9) {
+                greeting = "kann爸爸、早上好";
+            } else if (hours >= 9 && hours < 11) {
+                greeting = "kann爸爸、上午好";
+            } else if (hours >= 11 && hours < 14) {
+                greeting = "kann爸爸、中午好";
+            }  else if (hours >= 14 && hours < 17) {
+                greeting = "kann爸爸、下午好";
+            } else if (hours >= 17 && hours < 19) {
+                greeting = "kann爸爸、傍晚好，吃过晚饭了吗";
+            }else if (hours >= 19 && hours < 23) {
+                greeting = "kann爸爸、晚上好";
+            }else if (hours === 23) {
+                greeting = "kann爸爸、晚安";
+            } else {
+                greeting = "kann爸爸、夜深了，休息吧";
+            }
+            document.getElementById("messageDisplay").textContent = greeting;
+        }
+
+        // 每秒更新一次时间
+        setInterval(updateTime, 1000);
+    </script>
+</head>
+<body onload="updateTime()">
+    <div class="container">
+        <h1 id="timeDisplay">日本时间:</h1>
+        <h2 id="messageDisplay"></h2>
+    </div>
+</body>
+</html>
